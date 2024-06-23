@@ -23,7 +23,7 @@ using UnityEngine;
 [assembly: ComVisible(false)]
 [assembly: Guid("0a164a77-b539-4063-b68b-3341f0194610")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: TargetFramework(".NETFramework,Version=v4.8", FrameworkDisplayName = ".NET Framework 4.8")]
+//[assembly: TargetFramework(".NETFramework,Version=v4.8", FrameworkDisplayName = ".NET Framework 4.8")]
 [assembly: AssemblyVersion("1.0.0.0")]
 namespace TestMod
 {
@@ -48,8 +48,8 @@ namespace TestMod
 			{
 				Instance = this;
 			}
-			mls = Logger.CreateLogSource("NoOldBirdMod");
-			mls.LogInfo((object)"The No Old Bird Mod has awaken");
+			mls = BepInEx.Logging.Logger.CreateLogSource("NoOldBirdMod");
+			mls.LogInfo((object)"The No Old Bird Mod is now active!");
 			harmony.PatchAll(typeof(NoOldBird));
 			harmony.PatchAll(typeof(NoOldBirdAtLoadPatch));
 		}
@@ -68,7 +68,7 @@ namespace TestMod.Patches
 			SpawnableEnemyWithRarity val = null;
 			foreach (SpawnableEnemyWithRarity item in outsideEnemies)
 			{
-				if (item.enemyType.enemyName == "OldBird")
+				if (item.enemyType.enemyName == "RadMech")
 				{
 					val = item;
 				}
@@ -76,7 +76,7 @@ namespace TestMod.Patches
 			if (val != null)
 			{
 				outsideEnemies.Remove(val);
-				Logger.CreateLogSource("NoOldBirdMod").LogInfo((object)"Old Bird removed!");
+				BepInEx.Logging.Logger.CreateLogSource("NoOldBirdMod").LogInfo((object)"Old Bird removed!");
 			}
 		}
 	}
